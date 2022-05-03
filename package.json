@@ -1,0 +1,15 @@
+{
+  "name": "cf-saathi-api-prod",
+  "version": "1.0.0",
+  "description": "This is the API of the CF Saathi Web App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shashank Taliwal",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1"
+  }
+}

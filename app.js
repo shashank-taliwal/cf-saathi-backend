@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const { response } = require('express');
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -12,7 +13,10 @@ function findIndexInArray(finalResp, problemObj) {
     return -1;
 }
 app.get('/', (req, res) => {
-    res.send("Welcome to CF Saathi");
+    // res.send("Welcome to CF Saathi");
+    console.log("========================================");
+    console.log("Welcome to CF Saathi");
+    console.log("========================================");
 });
 
 
@@ -95,7 +99,44 @@ app.get(`/getProblems/:user`, (req, res) => {
             console.log(error);
             res.json({ status: 'failed', data: error });
         })
-})
+});
+
+app.get('/getRating/:user', (req, res) => {
+    let cfHandle = req.params.user;
+    axios.get(`https://codeforces.com/api/user.rating?handle=${cfHandle}`)
+        .then(response => {
+            const cfRatingResp = response.data.result;
+            let finalResp = [];
+            for (let i = 0; i < cfRatingResp.length; i++) {
+                let cfRatingObj = {
+                    "ContestID": cfRatingResp[i].contestId,
+                    "ContestName": cfRatingResp[i].contestName,
+                    "Rank": cfRatingResp[i].rank,
+                    "Old_Rating": cfRatingResp[i].oldRating,
+                    "New_Rating": cfRatingResp[i].newRating
+                }
+                finalResp.push(cfRatingObj);
+            }
+            res.json({ statusCode: '200', data: finalResp });
+        })
+        .catch(error => {
+            res.json({ status: 'failed', data: error });
+        });
+});
+
+app.get('/getUserInfo/:user', (req, res) => {
+    let cfHandle = req.params.user;
+    axios.get(`https://codeforces.com/api/user.info?handles=${cfHandle}`)
+        .then(response => {
+            const cfUserInfo = response.data.result;
+            res.json({ statusCode: '200', data: cfUserInfo });
+        })
+        .catch(error =>
+            res.json({ status: 'failed', data: error }));
+});
 app.listen(port, () => {
     console.log(`Server up and running at port ${port}`);
+    console.log("========================================");
+    console.log("Welcome to CF Saathi");
+    console.log("========================================");
 })

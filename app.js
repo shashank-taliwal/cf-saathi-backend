@@ -1,9 +1,10 @@
 const express = require('express');
 const axios = require('axios');
+const cors=require('cors');
 const { response } = require('express');
 const app = express();
 const port = process.env.PORT || 3001;
-
+app.use(cors());
 function findIndexInArray(finalResp, problemObj) {
     for (let i = 0; i < finalResp.length; i++) {
         if (finalResp[i].problem === problemObj.problem) {
@@ -126,6 +127,7 @@ app.get('/getRating/:user', (req, res) => {
 
 app.get('/getUserInfo/:user', (req, res) => {
     let cfHandle = req.params.user;
+    console.log(cfHandle);
     axios.get(`https://codeforces.com/api/user.info?handles=${cfHandle}`)
         .then(response => {
             const cfUserInfo = response.data.result;

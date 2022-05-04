@@ -14,7 +14,7 @@ function findIndexInArray(finalResp, problemObj) {
     return -1;
 }
 app.get('/', (req, res) => {
-    // res.send("Welcome to CF Saathi");
+    res.send("Welcome to CF Saathi");
     console.log("========================================");
     console.log("Welcome to CF Saathi");
     console.log("========================================");
